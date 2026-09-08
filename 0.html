@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>OmniCore PRO — Ultimate Chaos Engine v6.2</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #020406; --pnl: #0d1117; --ac: #00ff88; --ac2: #ff0055; --tx: #c9d1e8; --brd: #30363d; --demo: #f1c40f; }
+        body { background: var(--bg); color: var(--tx); font-family: 'JetBrains Mono', monospace; margin: 0; padding: 20px; font-size: 12px; }
+        .container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brd); padding-bottom: 10px; }
+        .title { font-family: 'Syne'; font-size: 1.8rem; color: var(--ac); letter-spacing: -1px; }
+        .area-box { background: var(--pnl); border: 1px solid var(--brd); border-radius: 8px; padding: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); position: relative; }
+        textarea { width: 100%; height: 160px; background: #000; border: 1px solid var(--brd); color: #7ee787; padding: 12px; border-radius: 4px; resize: none; outline: none; box-sizing: border-box; font-size: 11px; transition: 0.3s; margin-bottom: 10px; }
+        .btn-group { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        button { cursor: pointer; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; font-family: 'Syne'; transition: 0.2s; text-transform: uppercase; font-size: 11px; display: flex; align-items: center; gap: 5px; }
+        input[type="text"] { background: #000; border: 1px solid var(--brd); color: var(--demo); padding: 10px; border-radius: 4px; font-family: 'JetBrains Mono'; outline: none; flex-grow: 1; }
+        .btn-demo { background: var(--demo); color: #000; }
+        .btn-file { background: var(--brd); color: #fff; border: 1px solid #484f58; border-bottom: 2px solid var(--ac); }
+        .btn-copy { background: #1f242c; color: var(--ac); border: 1px solid var(--ac); padding: 6px 12px; font-size: 10px; }
+        .btn-merge { background: var(--ac); color: #000; width: 100%; font-size: 13px; margin-top: 5px; }
+        .label { font-size: 10px; color: #8b949e; text-transform: uppercase; margin-bottom: 8px; display: block; font-weight: bold; }
+        .status-bar { background: #000; padding: 10px; border-radius: 4px; border-left: 4px solid var(--ac2); font-size: 11px; margin-top: 10px; display: flex; justify-content: space-between; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        .id-tag { font-family: 'JetBrains Mono'; font-size: 9px; word-break: break-all; background: rgba(0,255,136,0.05); padding: 5px; border-radius: 3px; border: 1px solid rgba(0,255,136,0.1); margin-bottom: 8px; color: var(--tx); }
+        .id-tag a { color: var(--ac); text-decoration: none; border-bottom: 1px dashed var(--ac); }
+        .id-tag a:hover { color: #fff; border-bottom-style: solid; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="title">OMNICORE <span style="font-size: 0.8rem; color: #484f58;">MAX-PRO V6.2</span></div>
+        <div style="color: #58a6ff; font-weight: bold;">LOC: C:\Users\a\Desktop\gizli\</div>
+    </div>
+    <div class="area-box" style="border-color: var(--demo);">
+        <span class="label" style="color: var(--demo);">00 // UNIVERSAL INJECTION (AUTO-RECONSTRUCT)</span>
+        <div class="btn-group">
+            <input type="text" id="targetFileName" placeholder="Dosya adı (pure.html...)">
+            <button class="btn-demo" onclick="fetchBigIntData()">⚡ GITHUB'DAN ÇEK</button>
+            <input type="file" id="localFiles" style="display:none" multiple onchange="handleLocalFiles(event)">
+            <button class="btn-file" onclick="document.getElementById('localFiles').click()">📁 DOSYA(LARI) SEÇ</button>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="area-box">
+            <span class="label">Stream Alpha (ID-3)</span>
+            <div id="idL" class="id-tag">ID-3: --</div>
+            <textarea id="partLeft" placeholder="Waiting..."></textarea>
+            <div class="copy-wrapper" style="display: flex; justify-content: flex-end;"><button class="btn-copy" onclick="copyContent('partLeft')">📋 KOPYALA</button></div>
+        </div>
+        <div class="area-box">
+            <span class="label">Stream Beta (ID-5)</span>
+            <div id="idR" class="id-tag">ID-5: --</div>
+            <textarea id="partRight" placeholder="Waiting..."></textarea>
+            <div class="copy-wrapper" style="display: flex; justify-content: flex-end;"><button class="btn-copy" onclick="copyContent('partRight')">📋 KOPYALA</button></div>
+        </div>
+    </div>
+    <div class="area-box">
+        <span class="label">02 // GATEWAY RECONSTRUCTION</span>
+        <textarea id="mainOut" readonly style="color: #58a6ff; height: 200px;" placeholder="Merge result..."></textarea>
+        <div class="copy-wrapper" style="margin-bottom: 10px; display: flex; justify-content: flex-end; gap:10px;">
+             <button class="btn-copy" style="border-color: #58a6ff; color: #58a6ff;" onclick="copyContent('mainOut')">📋 KODU KOPYALA</button>
+        </div>
+        <button id="mergeBtn" class="btn-merge" onclick="ultimateMerge()">🗜️ FERMUARI KAPAT (RECONSTRUCT)</button>
+    </div>
+    <div class="status-bar">
+        <span id="log">SYSTEM READY...</span>
+        <span style="opacity: 0.5;">MOD: AUTO-SYNC</span>
+    </div>
+</div>
+
+<script>
+    const ghosts = ['§', '¶', '¤', '†', '‡', '±', 'µ', 'º', '¿', '¬', '¦', '©', '®', '⁝', '⁞'];
+    function log(m, err = false) { const el = document.getElementById('log'); el.innerText = m; el.style.color = err ? "#ff0055" : "#00ff88"; }
+    
+    function calculateBigIntIDs(name) {
+        let d = ""; for (let i=0; i<name.length; i++) d += name.charCodeAt(i).toString();
+        const b = BigInt(d);
+        return { l: (b * 3n).toString(), r: (b * 5n).toString() };
+    }
+
+    function createLink(id) { 
+        return id === "--" ? "--" : `<a href="https://bandanee.github.io/w/${id}.html" target="_blank">${id}.html</a>`; 
+    }
+
+    function download(content, name) {
+  
+    }
+
+    async function handleLocalFiles(e) {
+        const files = Array.from(e.target.files);
+        if(files.length === 0) return;
+
+        if(files.length === 1) {
+            log("SPLITTING...");
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const src = ev.target.result;
+                const ids = calculateBigIntIDs(files[0].name);
+                let left = ""; let right = "";
+                for (let i = 0; i < src.length; i++) {
+                    let noise = ghosts[Math.floor(Math.random() * ghosts.length)];
+                    if ((i + 1) % 2 !== 0) left += src[i] + noise;
+                    else right += src[i] + noise;
+                }
+                document.getElementById('partLeft').value = left;
+                document.getElementById('partRight').value = right;
+                document.getElementById('idL').innerHTML = "SPLIT-L: " + createLink(ids.l);
+                document.getElementById('idR').innerHTML = "SPLIT-R: " + createLink(ids.r);
+                download(left, ids.l + ".html");
+                setTimeout(() => download(right, ids.r + ".html"), 300);
+            };
+            reader.readAsText(files[0]);
+        } else {
+            log("MERGING...");
+            const results = await Promise.all(files.map(f => new Promise(res => {
+                const r = new FileReader();
+                r.onload = (ev) => res({ name: f.name, content: ev.target.result });
+                r.readAsText(f);
+            })));
+
+            // Basit isim eşleme (ID bazlı)
+            let lRes = results[0], rRes = results[1];
+            const mainN = document.getElementById('targetFileName').value.trim();
+            if(mainN) {
+                const ids = calculateBigIntIDs(mainN);
+                if(results[1].name.includes(ids.l)) { lRes = results[1]; rRes = results[0]; }
+            }
+
+            document.getElementById('partLeft').value = lRes.content;
+            document.getElementById('idL').innerHTML = "LOCAL-L: " + createLink(lRes.name.replace('.html',''));
+            document.getElementById('partRight').value = rRes.content;
+            document.getElementById('idR').innerHTML = "LOCAL-R: " + createLink(rRes.name.replace('.html',''));
+
+            document.getElementById('mergeBtn').click();
+        }
+    }
+
+    async function fetchBigIntData() {
+        const n = document.getElementById('targetFileName').value.trim();
+        if(!n) return log("HATA: DOSYA İSMİ ŞART!", true);
+        const ids = calculateBigIntIDs(n);
+        log("GITHUB'DAN ÇEKİLİYOR...");
+        try {
+            const [rL, rR] = await Promise.all([
+                fetch(`https://okankaplanedu.github.io/w/${ids.l}.html`).then(r => r.text()),
+                fetch(`https://okankaplanedu.github.io/w/${ids.r}.html`).then(r => r.text())
+            ]);
+            document.getElementById('partLeft').value = rL;
+            document.getElementById('partRight').value = rR;
+            document.getElementById('idL').innerHTML = "ID-3: " + createLink(ids.l);
+            document.getElementById('idR').innerHTML = "ID-5: " + createLink(ids.r);
+            document.getElementById('mergeBtn').click();
+        } catch (e) { log("GITHUB HATASI!", true); }
+    }
+
+    function ultimateMerge() {
+        let L_raw = document.getElementById('partLeft').value;
+        let R_raw = document.getElementById('partRight').value;
+        if(!L_raw || !R_raw) return;
+        const cleaner = new RegExp(`[${ghosts.join('')}]`, 'g');
+        let L = L_raw.replace(cleaner, ''), R = R_raw.replace(cleaner, '');
+        let final = "";
+        let max = Math.max(L.length, R.length);
+        for (let i = 0; i < max; i++) {
+            if (i < L.length) final += L[i];
+            if (i < R.length) final += R[i];
+        }
+        document.getElementById('mainOut').value = final;
+        log("RECONSTRUCT TAMAMLANDI.");
+    }
+
+    async function copyContent(id) {
+        const t = document.getElementById(id).value;
+        if(t) { await navigator.clipboard.writeText(t); log("KOPYALANDI!"); }
+    }
+</script>
+</body>
+</html>
